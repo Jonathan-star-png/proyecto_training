@@ -1,0 +1,31 @@
+version: "3.5"
+services:
+  backend-app:
+    build: ./Backend_python
+    ports:
+      - "5000:5000"
+    volumes:
+        - ./Backend_python:/app
+    working_dir: /Backend_python/app
+    environment:
+        - FLASK_APP=/app/app.py
+        - MONGO_URI=mongodb://db:27017/pythonmongodb
+    depends_on:
+        - db
+  frontend-app:
+    build: ./frontend_react
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend_react/src:/app/src
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+volumes:
+    mongodata:
+
+
+
